@@ -13,15 +13,11 @@
 
 const express = require("express");
 const path = require("path");
-
-// Assignment 3 module wiring
 const LegoData = require("./modules/legoSets");
 const legoData = new LegoData();
-
 const app = express();
 const HTTP_PORT = process.env.PORT || 8080;
 
-// Serve static assets in /views (optional if you want images/css later)
 app.use(express.static("views"));
 
 // Routes
@@ -59,18 +55,18 @@ app.get("/lego/sets/:set_num", async (req, res) => {
   }
 });
 
-// Custom 404 → serve views/404.html
+// 404 handler
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
 });
 
-// Initialize data, then start server
+// Initialize data and then start server
 legoData.initialize()
   .then(() => {
     app.listen(HTTP_PORT, () => {
-      console.log(`Server listening on: http://localhost:${HTTP_PORT}`);
+      console.log(`Server running at http://localhost:${HTTP_PORT}`);
     });
   })
   .catch((err) => {
-    console.error(`Failed to initialize data: ${err}`);
+    console.error(`Error: ${err}`);
   });

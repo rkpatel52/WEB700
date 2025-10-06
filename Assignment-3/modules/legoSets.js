@@ -9,7 +9,6 @@ class LegoData {
   }
 
   async initialize() {
-    // Simulate async init if your data sources ever become async
     this.sets = setData;
     this.themes = themeData;
     return true;
