@@ -91,3 +91,5 @@ app.use((req, res) => res.status(404).render("404"));
 legoData.initialize()
   .then(() => { app.listen(HTTP_PORT, () => console.log(`Server running on http://localhost:${HTTP_PORT}`)); })
   .catch((err) => { console.error(err); process.exit(1); });
+
+  require('dotenv').config();

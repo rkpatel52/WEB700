@@ -5,12 +5,33 @@ const Sequelize = require('sequelize');
 
 class LegoData {
   constructor() {
-    this.sequelize = new Sequelize(process.env.PGDATABASE, process.env.PGUSER, process.env.PGPASSWORD, {
-      host: process.env.PGHOST,
-      dialect: 'postgres',
-      dialectModule: require('pg'),
-      logging: false
-    });
+    // this.sequelize = new Sequelize(process.env.PGDATABASE, process.env.PGUSER, process.env.PGPASSWORD, {
+    //   host: process.env.PGHOST,
+    //   dialect: 'postgres',
+    //   dialectModule: require('pg'),
+    //   logging: false
+    // });
+    this.sequelize = new Sequelize(
+  process.env.PGDATABASE,
+  process.env.PGUSER,
+  process.env.PGPASSWORD,
+  {
+    host: process.env.PGHOST,
+    port: process.env.PGPORT || 5432,  // optional but good to have
+    dialect: 'postgres',
+    dialectModule: require('pg'),
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,          // this is like sslmode=require
+        rejectUnauthorized: false // ignore self-signed cert issues (common for school/cloud DBs)
+      }
+    }
+  }
+);
+
+
+
 
     this.Theme = this.sequelize.define('Theme', {
       id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
